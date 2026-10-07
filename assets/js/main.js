@@ -153,6 +153,17 @@ document.addEventListener('DOMContentLoaded', () => {
       PRODUCTS = PRODUCTS.filter(x=>x.id!==t.closest('[data-adm-del]').dataset.admDel);
       localStorage.setItem('bnan_products', JSON.stringify(PRODUCTS)); if (typeof initProductsPage==='function') initProductsPage(); if (typeof initHome==='function') initHome(); renderAdminTable(); toast('تم الحذف');
     }
+    if (t.closest('[data-adm-edit]')) {
+      const id = t.closest('[data-adm-edit]').dataset.admEdit;
+      const p = PRODUCTS.find(x=>x.id===id);
+      if (p) {
+        const set = (idv,v)=>{ const el=document.getElementById(idv); if(el) el.value = v!==undefined?v:''; };
+        set('admName', p.name); set('admPrice', p.price); set('admCat', p.category); set('admGroup', p.group||'default');
+        set('admSku', p.sku); set('admDisc', p.discount||0); set('admStock', p.stock||0); set('admShort', p.short||'');
+        const eid = document.getElementById('admEditId'); if(eid) eid.value = id;
+        toast('تم تحميل المنتج للتعديل');
+      }
+    }
     if (t.closest('#admAdd')) {
       const name = document.getElementById('admName').value.trim();
       const price = parseFloat(document.getElementById('admPrice').value)||0;
@@ -161,10 +172,19 @@ document.addEventListener('DOMContentLoaded', () => {
       const sku = document.getElementById('admSku').value.trim()||('BN'+Date.now().toString().slice(-6));
       const disc = parseFloat(document.getElementById('admDisc').value)||0;
       const stock = parseFloat(document.getElementById('admStock').value)||0;
-      const nid = 'bn-'+Math.random().toString(36).slice(2,8);
-      PRODUCTS.unshift({id:nid,sku,name:name||'منتج جديد',category:cat,price,oldPrice:null,unit:'للقطعة',rating:4.5,reviews:0,stock,badge:'',material:'كرتون',dims:'-',weight:'-',short:'',desc:'',features:[],colors:['#c98f4e','#8a5a2b','#d9b48a'],discount:disc,group});
-      localStorage.setItem('bnan_products', JSON.stringify(PRODUCTS)); if (typeof initProductsPage==='function') initProductsPage(); if (typeof initHome==='function') initHome(); renderAdminTable(); toast('تمت الإضافة');
-      ['admName','admSku'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
+      const short = document.getElementById('admShort')?.value||'';
+      const eid = document.getElementById('admEditId')?.value||'';
+      if (eid) {
+        const p = PRODUCTS.find(x=>x.id===eid);
+        if (p) {
+          p.name=name||p.name; p.price=price; p.category=cat; p.group=group; p.sku=sku; p.discount=disc; p.stock=stock; p.short=short;
+        }
+      } else {
+        const nid = 'bn-'+Math.random().toString(36).slice(2,8);
+        PRODUCTS.unshift({id:nid,sku,name:name||'منتج جديد',category:cat,price,oldPrice:null,unit:'للقطعة',rating:4.5,reviews:0,stock,badge:'',material:'كرتون',dims:'-',weight:'-',short,desc:'',features:[],colors:['#c98f4e','#8a5a2b','#d9b48a'],discount:disc,group});
+      }
+      localStorage.setItem('bnan_products', JSON.stringify(PRODUCTS)); if (typeof initProductsPage==='function') initProductsPage(); if (typeof initHome==='function') initHome(); renderAdminTable(); toast(eid ? 'تم التعديل' : 'تمت الإضافة');
+      ['admName','admSku','admShort','admEditId','admPrice','admDisc','admStock'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
     }
   });
 
@@ -200,7 +220,7 @@ function injectSharedUI() {
   authModal.id = 'authModal';
   authModal.setAttribute('role', 'dialog');
   authModal.setAttribute('aria-modal', 'true');
-  authModal.innerHTML = `<div class="modal__card"><button class="modal__close" data-close-auth aria-label="إغلاق">${ICONS.close}</button><div class="modal__body"><h2>تسجيل الدخول / إنشاء حساب</h2><div class="field"><label for="authEmail">البريد الإلكتروني</label><input id="authEmail" type="email" placeholder="example@domain.com"></div><div class="field"><label for="authPass">كلمة المرور</label><input id="authPass" type="password" placeholder="********"></div><div style="display:flex;gap:.5rem;flex-wrap:wrap"><button class="btn btn--primary" id="loginBtn">تسجيل الدخول</button><button class="btn btn--ghost" id="signupBtn">إنشاء حساب</button></div><p class="form__note" id="authMsg"></p></div></div>`;
+  authModal.innerHTML = `<div class="modal__card" style="max-width:480px"><button class="modal__close" data-close-auth aria-label="إغلاق">${ICONS.close}</button><div class="modal__body"><h2>تسجيل الدخول</h2><p style="color:var(--muted);margin-bottom:1.5rem">سجّل الدخول أو أنشئ حسابًا جديدًا</p><div class="field"><label for="authEmail">البريد الإلكتروني</label><input id="authEmail" type="email" placeholder="example@domain.com"></div><div class="field"><label for="authPass">كلمة المرور</label><input id="authPass" type="password" placeholder="********"></div><div style="display:flex;gap:.5rem;flex-wrap:wrap"><button class="btn btn--primary btn--block" id="loginBtn">تسجيل الدخول</button><button class="btn btn--ghost btn--block" id="signupBtn">إنشاء حساب جديد</button></div><p class="form__note" id="authMsg"></p></div></div>`;
   document.body.appendChild(authModal);
 
   const adminModal = document.createElement('div');
@@ -208,7 +228,7 @@ function injectSharedUI() {
   adminModal.id = 'adminModal';
   adminModal.setAttribute('role', 'dialog');
   adminModal.setAttribute('aria-modal', 'true');
-  adminModal.innerHTML = `<div class="modal__card" style="max-width:1100px"><button class="modal__close" data-close-admin aria-label="إغلاق">${ICONS.close}</button><div class="modal__body"><h2>لوحة تحكم الأدمن - إدارة المنتجات</h2><div class="form__row"><div class="field"><label>اسم المنتج</label><input id="admName"></div><div class="field"><label>السعر (شيكل)</label><input id="admPrice" type="number" step="0.01"></div></div><div class="form__row"><div class="field"><label>التصنيف</label><select id="admCat">${CATEGORIES.map(c=>c.id!=='all'?`<option value="${c.id}">${c.name}</option>`:'').join('')}</select></div><div class="field"><label>المجموعة</label><select id="admGroup">${PRODUCT_GROUPS.map(g=>`<option value="${g.id}">${g.name}</option>`).join('')}</select></div></div><div class="field"><label>رقم SKU</label><input id="admSku"></div><div class="form__row"><div class="field"><label>خصم (%)</label><input id="admDisc" type="number" min="0" max="99" value="0"></div><div class="field"><label>مخزون</label><input id="admStock" type="number" value="0"></div></div><button class="btn btn--primary" id="admAdd">إضافة منتج جديد</button><hr style="margin:1rem 0"><div class="size-table-wrap"><table class="size-table"><thead><tr><th>SKU</th><th>الاسم</th><th>التصنيف</th><th>المجموعة</th><th>السعر</th><th>خصم %</th><th>إجراءات</th></tr></thead><tbody id="admTable"></tbody></table></div></div></div>`;
+  adminModal.innerHTML = `<div class="modal__card" style="max-width:1100px"><button class="modal__close" data-close-admin aria-label="إغلاق">${ICONS.close}</button><div class="modal__body"><h2>لوحة تحكم الأدمن - إدارة المنتجات</h2><div class="form__row"><div class="field"><label>اسم المنتج</label><input id="admName"></div><div class="field"><label>السعر (شيكل)</label><input id="admPrice" type="number" step="0.01"></div></div><div class="form__row"><div class="field"><label>التصنيف</label><select id="admCat">${CATEGORIES.map(c=>c.id!=='all'?`<option value="${c.id}">${c.name}</option>`:'').join('')}</select></div><div class="field"><label>المجموعة</label><select id="admGroup">${PRODUCT_GROUPS.map(g=>`<option value="${g.id}">${g.name}</option>`).join('')}</select></div></div><div class="field"><label>رقم SKU</label><input id="admSku"></div><div class="form__row"><div class="field"><label>خصم (%)</label><input id="admDisc" type="number" min="0" max="99" value="0"></div><div class="field"><label>مخزون</label><input id="admStock" type="number" value="0"></div></div><div class="form__row"><div class="field"><label>الوحدة</label><input id="admUnit" placeholder="للقطعة"></div><div class="field"><label>وصف مختصر</label><input id="admShort" placeholder=""></div></div><div class="form__row"><div class="field"><label>معرف للتعديل (فارغ للإضافة)</label><input id="admEditId" placeholder=""></div><button class="btn btn--primary" id="admAdd">حفظ المنتج</button></div><hr style="margin:1rem 0"><div class="size-table-wrap"><table class="size-table"><thead><tr><th>SKU</th><th>الاسم</th><th>التصنيف</th><th>المجموعة</th><th>السعر</th><th>خصم %</th><th>إجراءات</th></tr></thead><tbody id="admTable"></tbody></table></div></div></div>`;
   document.body.appendChild(adminModal);
 
   const fab = document.createElement('a');
@@ -373,7 +393,7 @@ function openAdmin() { document.getElementById('adminModal').classList.add('is-o
 function renderAdminTable() {
   const tbody = document.getElementById('admTable');
   if (!tbody) return;
-  tbody.innerHTML = PRODUCTS.map(p=>`<tr><td>${p.sku}</td><td>${p.name}</td><td>${p.category}</td><td>${p.group||'default'}</td><td><input data-adm-price="${p.id}" type="number" step="0.01" value="${p.price}"></td><td><input data-adm-disc="${p.id}" type="number" min="0" max="99" value="${p.discount||0}"></td><td><button class="btn btn--sm btn--ghost" data-adm-save="${p.id}">حفظ</button> <button class="btn btn--sm" style="background:var(--danger);border-color:var(--danger)" data-adm-del="${p.id}">حذف</button></td></tr>`).join('');
+  tbody.innerHTML = PRODUCTS.map(p=>`<tr><td>${p.sku}</td><td>${p.name}</td><td>${p.category}</td><td>${p.group||'default'}</td><td><input data-adm-price="${p.id}" type="number" step="0.01" value="${p.price}"></td><td><input data-adm-disc="${p.id}" type="number" min="0" max="99" value="${p.discount||0}"></td><td>${p.stock||0}</td><td><button class="btn btn--sm btn--ghost" data-adm-save="${p.id}">حفظ</button> <button class="btn btn--sm btn--ghost" data-adm-edit="${p.id}">تعديل</button> <button class="btn btn--sm" style="background:var(--danger);border-color:var(--danger)" data-adm-del="${p.id}">حذف</button></td></tr>`).join('');
 }
 function persistProducts() {
   localStorage.setItem('bnan_products', JSON.stringify(PRODUCTS));
