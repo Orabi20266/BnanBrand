@@ -7,6 +7,9 @@
     "server",
     "client"
   ],
+  "engines": {
+    "node": ">=22.5.0"
+  },
   "scripts": {
     "dev": "concurrently -n api,web -c magenta,cyan \"npm run dev -w server\" \"npm run dev -w client\"",
     "dev:server": "npm run dev -w server",
