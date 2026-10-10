@@ -103,6 +103,34 @@ npm run build          # بناء لوحة التحكم في client/dist
 
 > بدون إعداد SMTP تعمل الرسائل بوضع التطوير: تُسجَّل في الطرفية وقاعدة البيانات فقط.
 
+### ⚡ نشر فوري على Render (Blueprint)
+
+المشروع يتضمن ملف `render.yaml` جاهزاً:
+
+1. ارفع المشروع إلى GitHub.
+2. افتح: `https://dashboard.render.com/blueprints` ← **New → Blueprint Instance**.
+3. اربط مستودعك — سيكتشف Render ملف `render.yaml` تلقائياً ويمرر المتغيرات لك.
+4. اضبط `ADMIN_USERNAME` و `ADMIN_PASSWORD` و `SMTP_*` من تبويب **Environment** قبل أول نشر.
+
+> الخطة `starter` تمنحك قرصاً دائماً (`/var/data`) لحفظ قاعدة البيانات والطلبات والصور.
+> للتجربة المجانية: احذفي كتلة `disk` ومتغيري `DB_PATH` و `UPLOADS_PATH` من الملف.
+
+### 🐳 نشر عبر Docker
+
+المشروع يتضمن `Dockerfile` جاهزاً (يبني لوحة التحكم ويهيّئ البيانات عند الإطلاق):
+
+```bash
+docker build -t bnanbrand .
+docker run -p 4000:4000 -e JWT_SECRET="سر-عشوائي-طويل" -e ADMIN_USERNAME=admin -e ADMIN_PASSWORD="كلمة-قوية" bnanbrand
+```
+
+للحفاظ على البيانات بين عمليات التشغيل أضف وحدة تخزين:
+
+```bash
+docker run -p 4000:4000 -v bnan-data:/var/data \
+  -e DB_PATH=/var/data/bnanbrand.db -e UPLOADS_PATH=/var/data/uploads bnanbrand
+```
+
 ## 🔐 قائمة فحص قبل الإنتاج
 
 - [ ] غيّر `JWT_SECRET`

@@ -1,0 +1,17 @@
+# ===== تجاهل الملفات غير الضرورية في سياق بناء Docker =====
+node_modules
+client/node_modules
+server/node_modules
+client/dist
+server/data
+server/uploads
+.env
+.env.*
+.git
+.gitignore
+backup_*
+legacy
+.DS_Store
+*.log
+start.command
+تشغيل الموقع.command

@@ -1,0 +1,61 @@
+# ============================================================
+#   Render Blueprint — نشر BnanBrand على Render تلقائياً
+#   اربطي المستودع بـ Render من:
+#   https://dashboard.render.com/blueprints  (New → Blueprint Instance)
+#   وسيُقرأ هذا الملف تلقائياً ويمرر المتغيرات لك.
+#
+#   🔸 ملاحظة حول الخطة:
+#   - `starter` يدعم قرصاً دائماً (البيانات والطلبات والصور تبقى).
+#   - إذا أردتِ المعاينة مجاناً (`free`): احذفي كتلة `disk` و
+#     متغيري DB_PATH و UPLOADS_PATH — ستعمل ببيانات عابرة
+#     تُعاد تهيئتها عند كل إعادة نشر.
+# ============================================================
+
+services:
+  - type: web
+    name: bnanbrand
+    runtime: node
+    plan: starter
+    region: frankfurt # أو singapore / oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    # يُنفَّذ قبل كل نشر: تعبئة البيانات مرة واحدة فقط (آمن لأنه لا يمسح الموجود)
+    preDeployCommand: npm run seed
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # مفتاح JWT يُولَّد تلقائياً وبشكل عشوائي في أول نشر
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      # بيانات الأدمن — اضبطيها من لوحة Render بعد أول نشر
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      # رابط الموقع النهائي (يظهر في روابط البريد و CORS)
+      - key: CLIENT_URL
+        sync: false
+      # إعدادات البريد (اختيارية — بدونها تُسجَّل الرسائل فقط)
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+      # مسارات ملفات دائمة على القرص
+      - key: DB_PATH
+        value: /var/data/bnanbrand.db
+      - key: UPLOADS_PATH
+        value: /var/data/uploads
+    disk:
+      name: bnanbrand-data
+      mountPath: /var/data
+      sizeGB: 1
