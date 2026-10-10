@@ -8,7 +8,7 @@ import bcrypt from 'bcryptjs';
 
 import { env } from './env.js';
 import { db, initSchema, ensureDefaultSettings, UPLOADS_DIR } from './db.js';
-import { authenticate } from './auth.js';
+import { authenticate, requireAdmin } from './auth.js';
 
 import { authRouter } from './routes/auth.js';
 import { categoriesRouter, adminCategoriesRouter } from './routes/categories.js';
@@ -63,10 +63,10 @@ app.use('/api/orders', ordersRouter);
 app.use('/api/settings', settingsRouter);
 
 // واجهات الإدارة (محميّة)
-app.use('/api/admin/categories', authenticate, adminCategoriesRouter);
-app.use('/api/admin/products', authenticate, adminProductsRouter);
-app.use('/api/admin/orders', authenticate, adminOrdersRouter);
-app.use('/api/admin/settings', authenticate, adminSettingsRouter);
+app.use('/api/admin/categories', authenticate, requireAdmin, adminCategoriesRouter);
+app.use('/api/admin/products', authenticate, requireAdmin, adminProductsRouter);
+app.use('/api/admin/orders', authenticate, requireAdmin, adminOrdersRouter);
+app.use('/api/admin/settings', authenticate, requireAdmin, adminSettingsRouter);
 app.use('/api/admin/stats', authenticate, statsRouter);
 app.use('/api/admin/uploads', authenticate, uploadsRouter);
 

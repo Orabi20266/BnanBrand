@@ -10,6 +10,14 @@ export function signToken(user) {
   );
 }
 
+/** Middleware: يمنع الوصول إلا للأدمن (يُستخدم بعد authenticate) */
+export function requireAdmin(req, res, next) {
+  if (!req.user || req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'هذه الإجراءات مخصصة للأدمن فقط.' });
+  }
+  next();
+}
+
 /** Middleware: يتحقق من صلاحية توكن الأدمن */
 export function authenticate(req, res, next) {
   const header = req.headers.authorization || '';

@@ -44,6 +44,16 @@
     submitOrder(payload) {
       return this.post('/api/orders', payload);
     },
+    /* المصادقة: دخول / تسجيل / بياناتي */
+    login(payload) {
+      return this.post('/api/auth/login', payload);
+    },
+    register(payload) {
+      return this.post('/api/auth/register', payload);
+    },
+    me() {
+      return this.get('/api/auth/me');
+    },
   };
 
   window.BnanAPI = BnanAPI;

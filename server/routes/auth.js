@@ -23,6 +23,34 @@ authRouter.post('/login', (req, res) => {
   });
 });
 
+/* إنشاء حساب عميل جديد */
+authRouter.post('/register', (req, res) => {
+  const { name = '', username, password } = req.body || {};
+  const email = String(username || '').trim().toLowerCase();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'يرجى إدخال بريد إلكتروني صحيح.' });
+  }
+  if (!password || String(password).length < 6) {
+    return res.status(400).json({ error: 'كلمة المرور يجب أن تكون 6 أحرف على الأقل.' });
+  }
+
+  const exists = db.prepare('SELECT 1 FROM users WHERE username = ?').get(email);
+  if (exists) {
+    return res.status(409).json({ error: 'هذا البريد مسجّل مسبقاً — سجّلي الدخول مباشرة.' });
+  }
+
+  const info = db
+    .prepare("INSERT INTO users (username, password_hash, full_name, role) VALUES (?, ?, ?, 'customer')")
+    .run(email, bcrypt.hashSync(String(password), 10), String(name).trim());
+
+  const user = db.prepare('SELECT * FROM users WHERE id = ?').get(info.lastInsertRowid);
+  const token = signToken(user);
+  res.status(201).json({
+    token,
+    user: { id: user.id, username: user.username, full_name: user.full_name, role: user.role },
+  });
+});
+
 authRouter.get('/me', authenticate, (req, res) => {
   res.json({ user: req.user });
 });

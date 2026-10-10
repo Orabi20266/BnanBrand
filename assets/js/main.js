@@ -3,14 +3,74 @@ const Auth = {
   adminKey: 'bnan_is_admin',
   load() { try { return JSON.parse(localStorage.getItem(this.key)||'null'); } catch { return null; } },
   save(u) { localStorage.setItem(this.key, JSON.stringify(u)); this.render(); },
-  logout() { localStorage.removeItem(this.key); localStorage.removeItem(this.adminKey); this.render(); },
-  isAdmin() { return localStorage.getItem(this.adminKey) === '1'; },
+  async login(username, password) {
+    // عبر الخادم الحقيقي (عند توفر الاتصال)
+    if (!window.BnanOffline) {
+      const res = await window.BnanAPI.login({ username: username.trim(), password });
+      localStorage.setItem('bnan_token', res.token);
+      this.save(res.user);
+      return res.user;
+    }
+    // وضع محلي تجريبي (بدون خادم: Pages / ملف مباشر)
+    const u = { email: username, name: username.split('@')[0] };
+    if (String(username).toLowerCase() === 'bnan1@bnan.test' && password === 'Bnan1234') {
+      localStorage.setItem(this.adminKey, '1');
+      u.role = 'admin';
+    }
+    this.save(u);
+    return u;
+  },
+  async register({ name, username, password }) {
+    if (!window.BnanOffline) {
+      const res = await window.BnanAPI.register({ name, username: username.trim(), password });
+      localStorage.setItem('bnan_token', res.token);
+      this.save(res.user);
+      return res.user;
+    }
+    const u = { email: username, name: name || username.split('@')[0] };
+    if (String(username).toLowerCase() === 'bnan1@bnan.test' && password === 'Bnan1234') {
+      localStorage.setItem(this.adminKey, '1');
+      u.role = 'admin';
+    }
+    this.save(u);
+    return u;
+  },
+  logout() { localStorage.removeItem(this.key); localStorage.removeItem(this.adminKey); localStorage.removeItem('bnan_token'); this.render(); },
+  isAdmin() {
+    const u = this.load();
+    return !!u && (u.role === 'admin' || localStorage.getItem(this.adminKey) === '1');
+  },
   render() {
     const btn = document.getElementById('authBtn');
     const ab = document.getElementById('adminBtn');
+    const adminLink = document.querySelector('[data-admin-link]');
     const u = this.load();
-    if (btn) btn.textContent = u ? ('تسجيل الخروج (' + (u.email||'مستخدم') + ')') : 'تسجيل الدخول';
-    if (ab) ab.style.display = (localStorage.getItem(this.adminKey) === '1') ? '' : 'none';
+    const online = !window.BnanOffline;
+    const onlineAdmin = online && !!u && u.role === 'admin';
+    const offlineAdmin = localStorage.getItem(this.adminKey) === '1';
+    if (btn) {
+      btn.textContent = u
+        ? ('تسجيل الخروج (' + (u.full_name || u.name || u.username || u.email || 'مستخدم') + ')')
+        : 'تسجيل الدخول';
+    }
+    /* زر لوحة التحكم: أدمن عبر الخادم → /admin | أدمن تجريبي محلي → لوحة سريعة */
+    if (ab) {
+      if (onlineAdmin) {
+        ab.textContent = 'لوحة التحكم';
+        ab.href = '/admin';
+        ab.style.display = '';
+        ab.onclick = null;
+      } else if (offlineAdmin) {
+        ab.textContent = 'إدارة المنتجات';
+        ab.href = '#';
+        ab.style.display = '';
+        ab.onclick = e => { e.preventDefault(); openAdmin(); };
+      } else {
+        ab.style.display = 'none';
+        ab.onclick = null;
+      }
+    }
+    if (adminLink) adminLink.style.display = (online && !onlineAdmin) ? '' : 'none';
   }
 };
 
@@ -246,7 +306,19 @@ function injectSharedUI() {
   authModal.id = 'authModal';
   authModal.setAttribute('role', 'dialog');
   authModal.setAttribute('aria-modal', 'true');
-  authModal.innerHTML = `<div class="modal__card" style="max-width:480px"><button class="modal__close" data-close-auth aria-label="إغلاق">${ICONS.close}</button><div class="modal__body"><h2>تسجيل الدخول</h2><p style="color:var(--muted);margin-bottom:1.5rem">سجّل الدخول أو أنشئ حسابًا جديدًا</p><div class="field"><label for="authEmail">البريد الإلكتروني</label><input id="authEmail" type="email" placeholder="example@domain.com"></div><div class="field"><label for="authPass">كلمة المرور</label><input id="authPass" type="password" placeholder="********"></div><div style="display:flex;gap:.5rem;flex-wrap:wrap"><button class="btn btn--primary btn--block" id="loginBtn">تسجيل الدخول</button><button class="btn btn--ghost btn--block" id="signupBtn">إنشاء حساب جديد</button></div><p class="form__note" id="authMsg"></p></div></div>`;
+  authModal.innerHTML = `<div class="modal__card" style="max-width:480px"><button class="modal__close" data-close-auth aria-label="إغلاق">${ICONS.close}</button><div class="modal__body">
+    <h2 id="authTitle">تسجيل الدخول</h2>
+    <p style="color:var(--muted);margin-bottom:1.5rem" id="authSub">مرحباً بعودتك إلى عالم BnanBrand</p>
+    <div class="field" id="authNameField" style="display:none"><label for="authName">الاسم الكامل</label><input id="authName" type="text" placeholder="اسمك أو لقبك"></div>
+    <div class="field"><label for="authEmail">البريد الإلكتروني</label><input id="authEmail" type="email" placeholder="example@domain.com" autocomplete="email"></div>
+    <div class="field"><label for="authPass">كلمة المرور</label><input id="authPass" type="password" placeholder="********" autocomplete="current-password"></div>
+    <button class="btn btn--primary btn--block" id="loginBtn">تسجيل الدخول</button>
+    <button class="btn btn--primary btn--block" id="signupBtn" style="display:none">إنشاء الحساب</button>
+    <p class="form__note" id="authMsg"></p>
+    <div class="text-center" style="margin-top:.75rem">
+      <button class="btn btn--ghost btn--sm" id="toggleAuthMode">ليس لديك حساب؟ أنشئيه الآن</button>
+    </div>
+  </div></div>`;
   document.body.appendChild(authModal);
 
   const adminModal = document.createElement('div');
@@ -314,6 +386,7 @@ function headerTemplate() {
     <div class="header-actions">
       <button class="icon-btn" id="cartToggle" aria-label="سلة المشتريات">${ICONS.cart}<span class="icon-btn__badge" data-count="0"></span></button>
       <button class="btn btn--ghost btn--sm" id="authBtn" aria-label="تسجيل الدخول">تسجيل الدخول</button>
+      <a class="btn btn--primary btn--sm" id="adminBtn" href="/admin" style="display:none">لوحة التحكم</a>
       <a class="btn btn--ghost btn--sm" href="/admin/login" data-admin-link>دخول المسؤول</a>
       <a class="btn btn--primary btn--sm" href="products.html">تسوّق الآن</a>
       <button class="icon-btn burger" id="burger" aria-label="القائمة">${ICONS.menu}</button>
@@ -571,26 +644,73 @@ function initCart() {
     if (u) { Auth.logout(); toast('تم تسجيل الخروج'); }
     else openAuth();
   });
-  document.getElementById('adminBtn')?.addEventListener('click', openAdmin);
-  document.getElementById('loginBtn')?.addEventListener('click', () => {
-    const email = document.getElementById('authEmail').value.trim();
-    const pass = document.getElementById('authPass').value.trim();
-    if (!email || !pass) return toast('املأ البريد وكلمة المرور');
-    Auth.save({ email });
-    document.getElementById('authMsg').textContent = 'تم تسجيل الدخول';
-    setTimeout(() => { document.getElementById('authModal').classList.remove('is-on'); document.getElementById('authMsg').textContent=''; }, 600);
-    toast('تم تسجيل الدخول');
+  // زر لوحة التحكم — سلوكه يحدده Auth.render (أدمن عبر الخادم → /admin، أدمن محلي → لوحة سريعة)
+  document.getElementById('adminBtn')?.addEventListener('click', e => {
+    if (window.BnanOffline && localStorage.getItem('bnan_is_admin') === '1') {
+      e.preventDefault();
+      openAdmin();
+    }
   });
-  document.getElementById('signupBtn')?.addEventListener('click', () => {
+  // تبديل وضع النافذة: تسجيل دخول ↔ إنشاء حساب
+  let authMode = 'login';
+  const setAuthMode = mode => {
+    authMode = mode;
+    const signup = mode === 'signup';
+    document.getElementById('authTitle').textContent = signup ? 'إنشاء حساب جديد' : 'تسجيل الدخول';
+    document.getElementById('authSub').textContent = signup ? 'انضمي إلينا وابدئي تجربة تسوّق خاصة بك' : 'مرحباً بعودتك إلى عالم BnanBrand';
+    document.getElementById('authNameField').style.display = signup ? '' : 'none';
+    document.getElementById('loginBtn').style.display = signup ? 'none' : '';
+    document.getElementById('signupBtn').style.display = signup ? '' : 'none';
+    document.getElementById('toggleAuthMode').textContent = signup ? 'لديك حساب؟ سجّلي الدخول' : 'ليس لديك حساب؟ أنشئيه الآن';
+  };
+  document.getElementById('toggleAuthMode')?.addEventListener('click', () => setAuthMode(authMode === 'login' ? 'signup' : 'login'));
+  document.getElementById('loginBtn')?.addEventListener('click', async () => {
     const email = document.getElementById('authEmail').value.trim();
     const pass = document.getElementById('authPass').value.trim();
+    const msg = document.getElementById('authMsg');
     if (!email || !pass) return toast('املأ البريد وكلمة المرور');
-    Auth.save({ email });
-    // إنشاء أدمن افتراضي اختياري: bnan1@bnan.test / Bnan1234
-    if (email === 'bnan1@bnan.test' && pass === 'Bnan1234') localStorage.setItem('bnan_is_admin','1');
-    toast('تم إنشاء الحساب');
-    Auth.render();
-    setTimeout(() => document.getElementById('authModal').classList.remove('is-on'), 600);
+    if (msg) msg.textContent = '';
+    try {
+      const user = await Auth.login(email, pass);
+      if (msg) msg.textContent = 'تم تسجيل الدخول';
+      // أدمن حقيقي عبر الخادم → الانتقال إلى لوحة التحكم
+      if (!window.BnanOffline && user.role === 'admin') {
+        toast('مرحباً بك في لوحة التحكم');
+        setTimeout(() => { closeAll(); location.href = '/admin'; }, 600);
+        return;
+      }
+      toast('تم تسجيل الدخول');
+      setTimeout(() => { document.getElementById('authModal').classList.remove('is-on'); document.getElementById('authMsg').textContent=''; closeAll(); }, 600);
+      Auth.render();
+    } catch (err) {
+      if (msg) msg.textContent = err.message;
+      toast(err.message);
+    }
+  });
+  document.getElementById('signupBtn')?.addEventListener('click', async () => {
+    const name = document.getElementById('authName').value.trim();
+    const email = document.getElementById('authEmail').value.trim();
+    const pass = document.getElementById('authPass').value.trim();
+    const msg = document.getElementById('authMsg');
+    if (!name) return toast('الرجاء إدخال الاسم');
+    if (!email) return toast('الرجاء إدخال البريد الإلكتروني');
+    if (pass.length < 6) return toast('كلمة المرور 6 أحرف على الأقل');
+    if (msg) msg.textContent = '';
+    try {
+      const user = await Auth.register({ name, username: email, password: pass });
+      if (msg) msg.textContent = 'تم إنشاء الحساب وتسجيل الدخول';
+      if (!window.BnanOffline && user.role === 'admin') {
+        toast('مرحباً بك في لوحة التحكم');
+        setTimeout(() => { closeAll(); location.href = '/admin'; }, 600);
+        return;
+      }
+      toast('تم إنشاء الحساب');
+      setTimeout(() => { document.getElementById('authModal').classList.remove('is-on'); document.getElementById('authMsg').textContent=''; closeAll(); }, 600);
+      Auth.render();
+    } catch (err) {
+      if (msg) msg.textContent = err.message;
+      toast(err.message);
+    }
   });
   document.addEventListener('click', e => {
     const t = e.target;
