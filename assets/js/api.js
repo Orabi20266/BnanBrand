@@ -13,8 +13,9 @@
 
   async function handle(res) {
     const text = await res.text();
-    const data = text ? JSON.parse(text) : {};
-    if (!res.ok) throw new Error(data.error || 'حدث خطأ في الاتصال بالخادم.');
+    let data = {};
+    try { data = text ? JSON.parse(text) : {}; } catch { /* صفحة 404 HTML مثل GitHub Pages */ }
+    if (!res.ok) throw new Error(data.error || 'تعذّر الاتصال بالخادم.');
     return data;
   }
 
