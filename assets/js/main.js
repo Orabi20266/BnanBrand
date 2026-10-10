@@ -45,7 +45,6 @@ const Auth = {
   render() {
     const btn = document.getElementById('authBtn');
     const ab = document.getElementById('adminBtn');
-    const adminLink = document.querySelector('[data-admin-link]');
     const u = this.load();
     const online = !window.BnanOffline;
     const onlineAdmin = online && !!u && u.role === 'admin';
@@ -72,7 +71,6 @@ const Auth = {
         ab.onclick = null;
       }
     }
-    if (adminLink) adminLink.style.display = (online && !onlineAdmin) ? '' : 'none';
   }
 };
 
@@ -202,10 +200,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   await (window.__bnanReady || Promise.resolve());
   injectSharedUI();
   rewriteLocalLinks();
-  // عند فتح الموقع دون خادم (GitHub Pages / ملف مباشر) لا توجد لوحة تحكم — نخفي زر المسؤول
-  if (window.BnanOffline) {
-    document.querySelectorAll('[data-admin-link]').forEach(a => { a.style.display = 'none'; });
-  }
   initHeader();
   initReveal();
   initToTop();
@@ -268,7 +262,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function rewriteLocalLinks() {
   // عند فتح الصفحة كملف (file://) لا يوجد خادم. نحوّل الروابط التي تبدأ بـ "/"
-  // إلى عنوان الخادم المحلي حتى يعمل زر "دخول المسؤول" ولوحة التحكم.
+  // إلى عنوان الخادم المحلي حتى تعمل روابط لوحة التحكم.
   if (location.protocol !== 'file:') return;
   const base = 'http://localhost:4000';
   document.querySelectorAll('a[href^="/"]').forEach(a => {
@@ -389,7 +383,6 @@ function headerTemplate() {
       <button class="icon-btn" id="cartToggle" aria-label="سلة المشتريات">${ICONS.cart}<span class="icon-btn__badge" data-count="0"></span></button>
       <button class="btn btn--ghost btn--sm" id="authBtn" aria-label="تسجيل الدخول">تسجيل الدخول</button>
       <a class="btn btn--primary btn--sm" id="adminBtn" href="admin/" style="display:none">لوحة التحكم</a>
-      <a class="btn btn--ghost btn--sm" href="admin/#/login" data-admin-link>دخول المسؤول</a>
       <a class="btn btn--primary btn--sm" href="products.html">تسوّق الآن</a>
       <button class="icon-btn burger" id="burger" aria-label="القائمة">${ICONS.menu}</button>
     </div>
