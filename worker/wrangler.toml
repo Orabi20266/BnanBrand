@@ -1,0 +1,28 @@
+# ============================================================
+#   Cloudflare Worker — خادم BnanBrand المجاني
+#   قاعدة البيانات: Cloudflare D1 (SQLite مجاني)
+#
+#   خطوات النشر (مرة واحدة):
+#     1) cd worker && npm install
+#     2) npx wrangler login
+#     3) npx wrangler d1 create bnanbrand
+#        → انسخي database_id واتركيه هنا في السطر database_id
+#     4) npx wrangler d1 migrations apply bnanbrand --remote
+#     5) npx wrangler d1 execute bnanbrand --remote --file=./seed.sql
+#     6) npx wrangler secret put JWT_SECRET   (الصقي مفتاحاً عشوائياً)
+#     7) npx wrangler deploy   → يطبع رابط الـ API
+# ============================================================
+
+name = "bnanbrand-api"
+main = "src/index.js"
+compatibility_date = "2025-05-01"
+
+# بيانات الأدمن الافتراضية (يمكن تغييرها لاحقاً من تبويب Settings في Cloudflare)
+[vars]
+ADMIN_USERNAME = "Bnan1"
+ADMIN_PASSWORD = "Bnan1234"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "bnanbrand"
+database_id = "REPLACE_WITH_DATABASE_ID"

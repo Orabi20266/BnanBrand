@@ -1,0 +1,19 @@
+{
+  "name": "bnanbrand-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "خادم BnanBrand على Cloudflare Workers + D1 (بديل مجاني للخادم المحلي)",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "gen": "node tools/gen.js",
+    "migrate:local": "wrangler d1 migrations apply bnanbrand --local",
+    "migrate:remote": "wrangler d1 migrations apply bnanbrand --remote",
+    "seed:local": "wrangler d1 execute bnanbrand --local --file=./seed.sql",
+    "seed:remote": "wrangler d1 execute bnanbrand --remote --file=./seed.sql"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useApi } from '../../lib/useApi.js';
+import { shrinkImage } from '../../lib/downscaleImage.js';
 import { useToast } from '../../context/ToastContext.jsx';
 import { api } from '../../api.js';
 import Loading from '../../components/Loading.jsx';
@@ -62,8 +63,9 @@ export default function ProductForm() {
     if (!file) return null;
     setUploading(true);
     try {
+      const small = await shrinkImage(file);
       const fd = new FormData();
-      fd.append('image', file);
+      fd.append('image', small);
       const res = await api.upload('/api/admin/uploads', fd);
       return res.url;
     } catch (e) {

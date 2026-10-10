@@ -59,7 +59,7 @@ const Auth = {
     if (ab) {
       if (onlineAdmin) {
         ab.textContent = 'لوحة التحكم';
-        ab.href = '/admin';
+        ab.href = (window.BNAN_ADMIN_URL || 'admin/');
         ab.style.display = '';
         ab.onclick = null;
       } else if (offlineAdmin) {
@@ -388,8 +388,8 @@ function headerTemplate() {
     <div class="header-actions">
       <button class="icon-btn" id="cartToggle" aria-label="سلة المشتريات">${ICONS.cart}<span class="icon-btn__badge" data-count="0"></span></button>
       <button class="btn btn--ghost btn--sm" id="authBtn" aria-label="تسجيل الدخول">تسجيل الدخول</button>
-      <a class="btn btn--primary btn--sm" id="adminBtn" href="/admin" style="display:none">لوحة التحكم</a>
-      <a class="btn btn--ghost btn--sm" href="/admin/login" data-admin-link>دخول المسؤول</a>
+      <a class="btn btn--primary btn--sm" id="adminBtn" href="admin/" style="display:none">لوحة التحكم</a>
+      <a class="btn btn--ghost btn--sm" href="admin/#/login" data-admin-link>دخول المسؤول</a>
       <a class="btn btn--primary btn--sm" href="products.html">تسوّق الآن</a>
       <button class="icon-btn burger" id="burger" aria-label="القائمة">${ICONS.menu}</button>
     </div>
@@ -681,7 +681,7 @@ function initCart() {
         if (window.BnanOffline) {
           setTimeout(() => { closeAll(); openAdmin(); }, 500);
         } else {
-          setTimeout(() => { closeAll(); location.href = '/admin'; }, 600);
+          setTimeout(() => { closeAll(); location.href = (window.BNAN_ADMIN_URL || 'admin/'); }, 600);
         }
         return;
       }
@@ -710,7 +710,7 @@ function initCart() {
         if (window.BnanOffline) {
           setTimeout(() => { closeAll(); openAdmin(); }, 500);
         } else {
-          setTimeout(() => { closeAll(); location.href = '/admin'; }, 600);
+          setTimeout(() => { closeAll(); location.href = (window.BNAN_ADMIN_URL || 'admin/'); }, 600);
         }
         return;
       }

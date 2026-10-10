@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useApi } from '../../lib/useApi.js';
+import { shrinkImage } from '../../lib/downscaleImage.js';
 import { useToast } from '../../context/ToastContext.jsx';
 import { api } from '../../api.js';
 import Loading from '../../components/Loading.jsx';
@@ -24,8 +25,9 @@ export default function AdminCategories() {
     if (!file) return;
     setUploading(true);
     try {
+      const small = await shrinkImage(file);
       const fd = new FormData();
-      fd.append('image', file);
+      fd.append('image', small);
       const res = await api.upload('/api/admin/uploads', fd);
       setForm((f) => ({ ...f, image: res.url }));
     } catch (err) {

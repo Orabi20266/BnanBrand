@@ -1,4 +1,9 @@
-const BASE = '';
+const isLocal =
+  typeof location !== 'undefined' &&
+  (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+
+// محلياً: نفس الخادم (''). على الإنترنت: خادم Cloudflare (من .env.production)
+const BASE = isLocal ? '' : import.meta.env.VITE_API_URL || '';
 
 function getToken() {
   return localStorage.getItem('bnan_token') || '';

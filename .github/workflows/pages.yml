@@ -32,14 +32,27 @@ jobs:
       - name: تحميل الكود
         uses: actions/checkout@v4
 
+      - name: إعداد Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: تثبيت الحزم
+        run: npm ci
+
+      - name: بناء لوحة التحكم (React)
+        run: npm run build
+
       - name: إعداد GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: تجهيز ملفات المتجر فقط (بدون كود الخادم)
+      - name: تجهيز ملفات المتجر + لوحة التحكم
         run: |
           mkdir -p _site
           cp index.html products.html about.html contact.html _site/
           cp -r assets _site/
+          cp -r client/dist _site/admin
 
       - name: رفع الملفات
         uses: actions/upload-pages-artifact@v3

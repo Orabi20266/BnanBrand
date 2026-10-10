@@ -6,6 +6,11 @@
 (function () {
   const TOKEN_KEY = 'bnan_token';
 
+  /* عنوان الخادم: محلي أو Cloudflare (يُضبط في assets/js/config.js) */
+  function apiUrl(path) {
+    return (window.BNAN_API_URL || '') + path;
+  }
+
   function authHeaders() {
     const t = localStorage.getItem(TOKEN_KEY);
     return t ? { Authorization: 'Bearer ' + t } : {};
@@ -21,24 +26,24 @@
 
   const BnanAPI = {
     get(path) {
-      return fetch(path, { headers: authHeaders() }).then(handle);
+      return fetch(apiUrl(path), { headers: authHeaders() }).then(handle);
     },
     post(path, body) {
-      return fetch(path, {
+      return fetch(apiUrl(path), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body: JSON.stringify(body || {}),
       }).then(handle);
     },
     put(path, body) {
-      return fetch(path, {
+      return fetch(apiUrl(path), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body: JSON.stringify(body || {}),
       }).then(handle);
     },
     remove(path) {
-      return fetch(path, { method: 'DELETE', headers: authHeaders() }).then(handle);
+      return fetch(apiUrl(path), { method: 'DELETE', headers: authHeaders() }).then(handle);
     },
     /* إرسال طلب حقيقي */
     submitOrder(payload) {
