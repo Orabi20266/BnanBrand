@@ -1,0 +1,51 @@
+# ============================================================
+#   GitHub Pages — معاينة حية للمتجر تلقائياً بعد كل رفع
+#   ⚠️ قبل أول استخدام: من إعدادات المستودع
+#   Settings → Pages → Source: اسميها "GitHub Actions"
+#   ثم اضغطي Push — ستظهر المعاينة على رابط Pages خلال دقائق.
+# ============================================================
+
+name: GitHub Pages — معاينة المتجر
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: نشر معاينة المتجر
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: تحميل الكود
+        uses: actions/checkout@v4
+
+      - name: إعداد GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: تجهيز ملفات المتجر فقط (بدون كود الخادم)
+        run: |
+          mkdir -p _site
+          cp index.html products.html about.html contact.html _site/
+          cp -r assets _site/
+
+      - name: رفع الملفات
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: نشر المعاينة
+        id: deployment
+        uses: actions/deploy-pages@v4

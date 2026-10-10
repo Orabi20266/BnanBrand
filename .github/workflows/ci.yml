@@ -1,0 +1,56 @@
+# ============================================================
+#   CI — يُنفَّذ تلقائياً عند كل رفع (push) إلى main وعند PR
+#   يقوم بـ: تثبيت الحزم → بناء لوحة التحكم → فحص إقلاع الخادم
+# ============================================================
+
+name: CI — فحص وبناء المشروع
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    name: فحص وبناء (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [22, 24] # node:sqlite يتطلب Node 22.5+
+    steps:
+      - name: تحميل الكود
+        uses: actions/checkout@v4
+
+      - name: إعداد Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: تثبيت الحزم
+        run: npm ci
+
+      - name: فحص صيغة ملفات الخادم
+        run: node --check server/index.js && node --check server/seed.js && node --check server/db.js && node --check server/mailer.js
+
+      - name: بناء لوحة التحكم (React)
+        run: npm run build
+
+      - name: فحص إقلاع الخادم + الواجهات
+        run: |
+          npm run seed >/dev/null
+          npm run start > /tmp/server.log 2>&1 &
+          sleep 4
+          echo "— الأقسام/المنتجات —"
+          curl -fsS http://localhost:4000/api/health
+          echo ""
+          curl -fsS http://localhost:4000/api/products | head -c 120
+          echo ""
+          echo "— صفحات المتجر (200) —"
+          for p in / /products.html /about.html /contact.html /assets/css/style.css /admin/login; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:4000$p")
+            echo "  $p → $code"
+            [ "$code" = "200" ] || exit 1
+          done
+          echo "✅ جميع الصفحات تعمل"
