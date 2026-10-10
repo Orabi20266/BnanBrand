@@ -1,0 +1,28 @@
+# ===== التبعيات والمخرجات =====
+node_modules/
+dist/
+client/dist/
+
+# ===== ملفات النظام =====
+.DS_Store
+Thumbs.db
+*.log
+
+# ===== متغيرات البيئة (تحتوي أسراراً — لا تُرفع أبداً) =====
+.env
+.env.local
+.env.*.local
+
+# ===== قاعدة البيانات وملفاتها =====
+server/data/*.db
+server/data/*.db-journal
+server/data/*.db-wal
+server/data/*.db-shm
+
+# ===== الملفات المرفوعة (تُنشأ بالتشغيل أو بأمر seed) =====
+server/uploads/*
+!server/uploads/.gitkeep
+
+# ===== نسخ احتياطية ومجلدات محلية =====
+backup_*/
+legacy/

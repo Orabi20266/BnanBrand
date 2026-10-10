@@ -4,40 +4,40 @@
    ========================================================== */
 
 :root {
-  /* الألوان */
-  --kraft-50: #fdf8f1;
-  --kraft-100: #f7ecdd;
-  --kraft-200: #ecd9bf;
-  --kraft-300: #dcc099;
-  --kraft-400: #c89f6b;
-  --kraft-500: #b8814a;
-  --kraft-600: #a06a38;
-  --kraft-700: #7f4f2b;
-  --kraft-800: #5d3a20;
-  --kraft-900: #3d2617;
+  /* الألوان — هوية BnanBrand الأنثوية (وردي) */
+  --kraft-50: #fff7fb;
+  --kraft-100: #ffe9f3;
+  --kraft-200: #ffd7e8;
+  --kraft-300: #ffc0cb;
+  --kraft-400: #ffb6d9;
+  --kraft-500: #f5a0c6;
+  --kraft-600: #e75480;
+  --kraft-700: #c93c67;
+  --kraft-800: #a83055;
+  --kraft-900: #3b2b33;
 
-  --ink-900: #1c1917;
-  --ink-700: #44403c;
-  --ink-500: #78716c;
-  --ink-300: #d6d3d1;
+  --ink-900: #2b1f26;
+  --ink-700: #5c4a53;
+  --ink-500: #9b8490;
+  --ink-300: #e7d8e0;
 
-  --brand: #a06a38;
-  --brand-dark: #7f4f2b;
-  --brand-light: #f7ecdd;
-  --accent: #146c5b;
-  --accent-light: #e6f2ef;
-  --danger: #b23a48;
-  --warn: #d9a441;
+  --brand: #e75480;
+  --brand-dark: #c93c67;
+  --brand-light: #ffe3ef;
+  --accent: #c9558a;
+  --accent-light: #ffe9f3;
+  --danger: #c0264a;
+  --warn: #e0a63c;
 
   --bg: #ffffff;
-  --bg-soft: #faf6f0;
+  --bg-soft: #fff7fb;
   --card: #ffffff;
 
   /* الظلال */
-  --shadow-sm: 0 1px 2px rgba(61, 38, 23, .06), 0 1px 3px rgba(61, 38, 23, .08);
-  --shadow-md: 0 4px 12px rgba(61, 38, 23, .08), 0 2px 4px rgba(61, 38, 23, .05);
-  --shadow-lg: 0 12px 32px rgba(61, 38, 23, .12), 0 4px 8px rgba(61, 38, 23, .06);
-  --shadow-xl: 0 24px 60px rgba(61, 38, 23, .18);
+  --shadow-sm: 0 1px 2px rgba(231, 84, 128, .07), 0 1px 3px rgba(231, 84, 128, .09);
+  --shadow-md: 0 4px 12px rgba(231, 84, 128, .10), 0 2px 4px rgba(231, 84, 128, .06);
+  --shadow-lg: 0 12px 32px rgba(231, 84, 128, .14), 0 4px 8px rgba(231, 84, 128, .07);
+  --shadow-xl: 0 24px 60px rgba(231, 84, 128, .20);
 
   /* القياسات */
   --radius-sm: 8px;
@@ -154,11 +154,13 @@ p { margin: 0 0 1rem; color: var(--ink-700); }
 }
 .brand { display: flex; align-items: center; gap: .7rem; font-weight: 900; font-size: 1.22rem; }
 .brand__mark {
+  background: linear-gradient(135deg, #f7d6e8 0%, #f2b5d4 100%);
+  box-shadow: 0 4px 10px rgba(242,181,212,.3);
   width: 42px; height: 42px; border-radius: 12px; flex: none;
   background: linear-gradient(145deg, var(--kraft-500), var(--kraft-800));
   display: grid; place-items: center; box-shadow: var(--shadow-sm);
 }
-.brand__mark svg { width: 24px; height: 24px; }
+.brand__mark svg { width: 24px; height: 24px; stroke: #fff; }
 .brand__text span { display: block; font-size: .7rem; font-weight: 600; color: var(--ink-500); letter-spacing: .06em; margin-top: -6px; }
 
 .main-nav { margin-inline-start: auto; }
@@ -310,7 +312,7 @@ p { margin: 0 0 1rem; color: var(--ink-700); }
   border: 1.5px solid var(--ink-300); border-radius: 999px; background: var(--bg-soft);
   transition: all .2s var(--ease);
 }
-.search input:focus { outline: none; border-color: var(--brand); background: #fff; box-shadow: 0 0 0 4px rgba(168, 106, 56, .12); }
+.search input:focus { outline: none; border-color: var(--brand); background: #fff; box-shadow: 0 0 0 4px rgba(231, 84, 128, .14); }
 
 .select-wrap { position: relative; }
 .select-wrap select {
@@ -513,7 +515,7 @@ p { margin: 0 0 1rem; color: var(--ink-700); }
   border-radius: var(--radius-sm); background: var(--bg-soft); transition: all .2s var(--ease);
 }
 .field input:focus, .field select:focus, .field textarea:focus {
-  outline: none; border-color: var(--brand); background: #fff; box-shadow: 0 0 0 4px rgba(168,106,56,.12);
+  outline: none; border-color: var(--brand); background: #fff; box-shadow: 0 0 0 4px rgba(231,84,128,.14);
 }
 .field textarea { resize: vertical; min-height: 118px; }
 .field__error { color: var(--danger); font-size: .82rem; margin-top: .3rem; display: none; }
@@ -692,7 +694,7 @@ table.size-table { width: 100%; border-collapse: collapse; min-width: 640px; bac
 }
 .value__icon {
   width: 60px; height: 60px; border-radius: 18px; margin: 0 auto 1rem; display: grid; place-items: center;
-  background: linear-gradient(145deg, var(--accent-light), #d3e8e3); color: var(--accent);
+  background: linear-gradient(145deg, var(--accent-light), #ffd7e8); color: var(--accent);
 }
 .value__icon svg { width: 28px; height: 28px; }
 .value h3 { font-size: 1.15rem; }
@@ -772,4 +774,62 @@ table.size-table { width: 100%; border-collapse: collapse; min-width: 640px; bac
 /* ---------- بدون JavaScript: نكشف كل المحتوى ---------- */
 @media (scripting: none), (scripting: initial-only) {
   .reveal { opacity: 1 !important; transform: none !important; }
+}
+/* ==========================================================
+   إضافات BnanBrand — صور المنتجات، المتغيرات، وإتمام الطلب
+   ========================================================== */
+.product__media img,
+.cart-item__img img,
+.modal__media img,
+.hero__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: inherit;
+}
+
+.cart-item__variant {
+  display: block;
+  font-size: .78rem;
+  color: var(--ink-500);
+  margin-top: .15rem;
+}
+
+.product-variants { display: grid; gap: .7rem; margin: 1rem 0; }
+.product-variants .field { margin: 0; }
+
+.checkout-form .form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .8rem;
+}
+@media (max-width: 560px) {
+  .checkout-form .form__row { grid-template-columns: 1fr; }
+}
+.checkout-summary {
+  background: var(--bg-soft);
+  border: 1px solid var(--kraft-100);
+  border-radius: var(--radius);
+  padding: .8rem 1rem;
+  margin: .8rem 0;
+}
+
+.order-success__icon {
+  width: 76px; height: 76px; margin: 0 auto 1rem;
+  border-radius: 50%;
+  background: var(--brand-light);
+  color: var(--brand-dark);
+  display: grid;
+  place-items: center;
+}
+.order-success__icon svg { width: 38px; height: 38px; }
+.order-code {
+  display: inline-block;
+  background: var(--brand-light);
+  color: var(--brand-dark);
+  font-weight: 800;
+  padding: .5rem 1.1rem;
+  border-radius: 999px;
+  margin: .8rem 0;
 }
