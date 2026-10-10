@@ -313,6 +313,7 @@ function headerTemplate() {
     </nav>
     <div class="header-actions">
       <button class="icon-btn" id="cartToggle" aria-label="سلة المشتريات">${ICONS.cart}<span class="icon-btn__badge" data-count="0"></span></button>
+      <button class="btn btn--ghost btn--sm" id="authBtn" aria-label="تسجيل الدخول">تسجيل الدخول</button>
       <a class="btn btn--ghost btn--sm" href="/admin/login" data-admin-link>دخول المسؤول</a>
       <a class="btn btn--primary btn--sm" href="products.html">تسوّق الآن</a>
       <button class="icon-btn burger" id="burger" aria-label="القائمة">${ICONS.menu}</button>
@@ -585,8 +586,8 @@ function initCart() {
     const pass = document.getElementById('authPass').value.trim();
     if (!email || !pass) return toast('املأ البريد وكلمة المرور');
     Auth.save({ email });
-    // إنشاء أدمن افتراضي اختياري: admin@bnan.test / admin
-    if (email === 'admin@bnan.test' && pass === 'admin') localStorage.setItem('bnan_is_admin','1');
+    // إنشاء أدمن افتراضي اختياري: bnan1@bnan.test / Bnan1234
+    if (email === 'bnan1@bnan.test' && pass === 'Bnan1234') localStorage.setItem('bnan_is_admin','1');
     toast('تم إنشاء الحساب');
     Auth.render();
     setTimeout(() => document.getElementById('authModal').classList.remove('is-on'), 600);

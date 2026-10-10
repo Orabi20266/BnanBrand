@@ -32,6 +32,7 @@ services:
       - key: JWT_EXPIRES_IN
         value: 7d
       # بيانات الأدمن — اضبطيها من لوحة Render بعد أول نشر
+      # (الافتراضي عند عدم الضبط: Bnan1 / Bnan1234)
       - key: ADMIN_USERNAME
         sync: false
       - key: ADMIN_PASSWORD

@@ -78,7 +78,7 @@ npm run build          # بناء لوحة التحكم في client/dist
 
 | الدور | المسار | الدخول |
 |---|---|---|
-| الأدمن | `/admin` | `admin` / `admin123` |
+| الأدمن | `/admin` | `Bnan1` / `Bnan1234` |
 
 > ⚠️ **غيّرها فوراً** من صفحة «الإعدادات» في اللوحة، وكذلك غيّر `JWT_SECRET` في `.env`.
 
@@ -121,7 +121,7 @@ npm run build          # بناء لوحة التحكم في client/dist
 
 ```bash
 docker build -t bnanbrand .
-docker run -p 4000:4000 -e JWT_SECRET="سر-عشوائي-طويل" -e ADMIN_USERNAME=admin -e ADMIN_PASSWORD="كلمة-قوية" bnanbrand
+docker run -p 4000:4000 -e JWT_SECRET="سر-عشوائي-طويل" -e ADMIN_USERNAME=Bnan1 -e ADMIN_PASSWORD="كلمة-قوية" bnanbrand
 ```
 
 للحفاظ على البيانات بين عمليات التشغيل أضف وحدة تخزين:
