@@ -25,4 +25,4 @@ ADMIN_PASSWORD = "Bnan1234"
 [[d1_databases]]
 binding = "DB"
 database_name = "bnanbrand"
-database_id = "REPLACE_WITH_DATABASE_ID"
+database_id = "8fb748aa-6c51-4842-8afa-3a4065f7be64"

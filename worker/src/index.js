@@ -754,8 +754,13 @@ async function serveAsset(env, idStr) {
 
 /* ---- تقديم صور المنتجات الافتراضية (SVG مدمجة) ---- */
 function serveSeedImage(name) {
-  const safe = String(name).replace(/[^a-zA-Z0-9._-]/g, '');
-  const svg = SEED_IMAGES[safe];
+  let decoded;
+  try {
+    decoded = decodeURIComponent(name);
+  } catch {
+    return err(404, 'غير موجود.');
+  }
+  const svg = SEED_IMAGES[decoded];
   if (!svg) return err(404, 'غير موجود.');
   return new Response(svg, {
     status: 200,
