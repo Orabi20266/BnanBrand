@@ -13,7 +13,8 @@ const Auth = {
     }
     // وضع محلي تجريبي (بدون خادم: Pages / ملف مباشر)
     const u = { email: username, name: username.split('@')[0] };
-    if (String(username).toLowerCase() === 'bnan1@bnan.test' && password === 'Bnan1234') {
+    const secret = String(username).toLowerCase();
+    if (password === 'Bnan1234' && (secret === 'bnan1' || secret === 'bnan1@bnan.test')) {
       localStorage.setItem(this.adminKey, '1');
       u.role = 'admin';
     }
@@ -28,7 +29,8 @@ const Auth = {
       return res.user;
     }
     const u = { email: username, name: name || username.split('@')[0] };
-    if (String(username).toLowerCase() === 'bnan1@bnan.test' && password === 'Bnan1234') {
+    const secret = String(username).toLowerCase();
+    if (password === 'Bnan1234' && (secret === 'bnan1' || secret === 'bnan1@bnan.test')) {
       localStorage.setItem(this.adminKey, '1');
       u.role = 'admin';
     }
@@ -673,10 +675,14 @@ function initCart() {
     try {
       const user = await Auth.login(email, pass);
       if (msg) msg.textContent = 'تم تسجيل الدخول';
-      // أدمن حقيقي عبر الخادم → الانتقال إلى لوحة التحكم
-      if (!window.BnanOffline && user.role === 'admin') {
+      // أدمن → الانتقال لواجهة الإدارة (لوحة التحكم عبر الخادم، أو واجهة الإدارة المحلية بدونه)
+      if (user.role === 'admin') {
         toast('مرحباً بك في لوحة التحكم');
-        setTimeout(() => { closeAll(); location.href = '/admin'; }, 600);
+        if (window.BnanOffline) {
+          setTimeout(() => { closeAll(); openAdmin(); }, 500);
+        } else {
+          setTimeout(() => { closeAll(); location.href = '/admin'; }, 600);
+        }
         return;
       }
       toast('تم تسجيل الدخول');
@@ -699,9 +705,13 @@ function initCart() {
     try {
       const user = await Auth.register({ name, username: email, password: pass });
       if (msg) msg.textContent = 'تم إنشاء الحساب وتسجيل الدخول';
-      if (!window.BnanOffline && user.role === 'admin') {
+      if (user.role === 'admin') {
         toast('مرحباً بك في لوحة التحكم');
-        setTimeout(() => { closeAll(); location.href = '/admin'; }, 600);
+        if (window.BnanOffline) {
+          setTimeout(() => { closeAll(); openAdmin(); }, 500);
+        } else {
+          setTimeout(() => { closeAll(); location.href = '/admin'; }, 600);
+        }
         return;
       }
       toast('تم إنشاء الحساب');
