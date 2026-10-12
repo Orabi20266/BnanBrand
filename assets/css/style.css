@@ -833,3 +833,124 @@ table.size-table { width: 100%; border-collapse: collapse; min-width: 640px; bac
   border-radius: 999px;
   margin: .8rem 0;
 }
+
+/* ==========================================================
+   تحسينات الجوال والهاتف — BnanBrand
+   ========================================================== */
+
+/* مسافات الحاويات على الشاشات الصغيرة */
+@media (max-width: 700px) {
+  :root { --header-h: 62px; }
+  html { scroll-padding-top: calc(var(--header-h) + 12px); }
+  .section { padding: 2.6rem 0; }
+  .container { width: min(100% - 1.6rem, var(--container)); }
+}
+
+/* الهيدر — مدمج ومرتّب على الهاتف */
+@media (max-width: 640px) {
+  .header-inner { gap: .55rem; }
+  .brand { font-size: 1.1rem; gap: .55rem; }
+  .brand__mark { width: 36px; height: 36px; border-radius: 10px; }
+  .brand__mark svg { width: 21px; height: 21px; }
+  .header-actions { gap: .4rem; }
+  .icon-btn { width: 40px; height: 40px; }
+  .icon-btn svg { width: 19px; height: 19px; }
+  .icon-btn__badge { min-width: 18px; height: 18px; font-size: .66rem; }
+  .header-actions .btn--sm { padding: .5rem .9rem; font-size: .85rem; }
+  /* زر "تسوّق الآن" موجود في قائمة الجوال — نغنيه من الهيدر الصغير */
+  .header-actions a[href="products.html"] { display: none; }
+}
+@media (max-width: 400px) {
+  .brand__text span { display: none; }
+}
+
+/* شبكة المنتجات — عمودان مريحان على الهاتف بدل عمود واحد طويل */
+@media (max-width: 680px) {
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: .7rem; }
+  .product__media { padding: .9rem; }
+  .product__body { padding: .75rem .8rem .9rem; }
+  .product__title { font-size: .95rem; min-height: 2.6em; }
+  .product__cat { font-size: .72rem; }
+  .product__meta { gap: .5rem; margin-bottom: .55rem; }
+  .price strong { font-size: 1.05rem; }
+  .price del { font-size: .75rem; }
+  .price small { font-size: .68rem; }
+  .product__footer { flex-direction: column; align-items: stretch; gap: .5rem; }
+  .product__actions { justify-content: flex-end; }
+  .icon-action { width: 38px; height: 38px; border-radius: 10px; }
+  .icon-action svg { width: 17px; height: 17px; }
+  .product__badge { top: .55rem; inset-inline-start: .55rem; padding: .22rem .55rem; font-size: .68rem; }
+  .product__fav { top: .5rem; inset-inline-end: .5rem; width: 30px; height: 30px; }
+  .product__fav svg { width: 16px; height: 16px; }
+  .toolbar { padding: .8rem; border-radius: var(--radius); }
+  .search { min-width: 0; }
+}
+
+/* الواجهة الرئيسية على الهاتف */
+@media (max-width: 680px) {
+  .hero { padding: 2.2rem 0 2.4rem; }
+  .hero__grid { gap: 1.8rem; }
+  .hero__visual { max-width: 420px; margin-inline: auto; }
+  .hero__float { padding: .55rem .75rem; font-size: .78rem; }
+  .hero__float svg { width: 18px; height: 18px; }
+  .hero__float--a { top: -10px; inset-inline-start: 2px; }
+  .hero__float--b { bottom: 10px; inset-inline-end: 2px; }
+  .hero__badges { grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+  .hero__badge { padding: .55rem .3rem; }
+  .hero__badge b { font-size: .95rem; }
+  .hero__badge span { font-size: .7rem; }
+  .hero__stats { gap: 1rem; }
+  .stat strong { font-size: 1.4rem; }
+  .stat span { font-size: .8rem; }
+  .page-hero { padding: 1.8rem 0 2rem; }
+  .section-head { margin-bottom: 2rem; }
+}
+
+/* نافذة المنتج — "Bottom Sheet" من أسفل الشاشة */
+@media (max-width: 600px) {
+  .modal { padding: 0; align-items: flex-end; }
+  .modal__card { max-height: 92dvh; border-radius: 22px 22px 0 0; }
+  .modal__media { padding: 1.2rem; }
+  .modal__body { padding: 1.2rem 1.15rem 1.4rem; }
+  .modal__body h2 { font-size: 1.25rem; }
+  .modal__price strong { font-size: 1.6rem; }
+  .modal__actions .btn { flex: 1; min-width: 0; white-space: normal; }
+  .modal__close { top: .7rem; inset-inline-end: .7rem; width: 36px; height: 36px; }
+  /* السلة الجانبية — إحكام المسافات */
+  .cart-panel__head, .cart-panel__body, .cart-panel__foot { padding-inline: 1rem; }
+  .cart-item__img { width: 58px; height: 58px; }
+}
+
+/* قائمة الجوال — مناطق لمس أوسع */
+@media (max-width: 900px) {
+  .mobile-nav { padding: 1rem; }
+  .mobile-nav a { padding: .95rem .85rem; font-size: .98rem; }
+  .mobile-nav .socials { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--kraft-100); }
+  .mobile-nav .socials a {
+    background: var(--bg-soft);
+    border: 1px solid var(--kraft-100);
+    color: var(--ink-700);
+  }
+  .mobile-nav .socials a:hover { background: var(--brand); color: #fff; }
+}
+
+/* تفاصيل عامة صغيرة */
+@media (max-width: 560px) {
+  .form { padding: 1.1rem; }
+  .info-item { padding: .85rem .9rem; }
+  .testimonial { padding: 1.2rem; }
+  .faq__q { padding: .9rem 1rem; }
+  .faq__a { padding: 0 1rem 1rem; }
+  .value { padding: 1.5rem 1.1rem; }
+  .feature { padding: 1.35rem 1.1rem; }
+  .usp { padding: 1.2rem 1rem; }
+  .step__num { width: 40px; height: 40px; font-size: 1rem; }
+  .cta-band { padding: 1.6rem 1.2rem; border-radius: var(--radius-lg); }
+  .size-table th, .size-table td { padding: .7rem .8rem; }
+}
+
+/* مناطق آمنة للشاشات ذات الحواف (آيفون) */
+@supports (padding: max(0px)) {
+  .whatsapp-fab { bottom: max(16px, env(safe-area-inset-bottom)); }
+  .to-top { bottom: max(16px, env(safe-area-inset-bottom)); }
+}

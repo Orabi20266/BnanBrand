@@ -351,7 +351,12 @@ function injectSharedUI() {
       <button class="cart-close" data-close-mobile aria-label="إغلاق">${ICONS.close}</button>
     </div>
     ${navLinks.map(l => `<a href="${l.href}"${l.page === currentPage() ? ' style="background:var(--brand-light);color:var(--brand-dark)"' : ''}>${l.label}</a>`).join('')}
-    <a class="btn btn--primary btn--block" style="margin-top:1.2rem" href="#contact">اطلب عرض سعر</a>`;
+    <a class="btn btn--primary btn--block" style="margin-top:1.2rem" href="#contact">اطلب عرض سعر</a>
+    <div class="socials">
+      <a href="https://www.instagram.com/bananqodemat?srtk=MTlwY21uc2dzdTBzag==" target="_blank" rel="noopener" aria-label="انستغرام">${ICONS.instagram}</a>
+      <a href="https://www.facebook.com" target="_blank" rel="noopener" aria-label="فيسبوك">${ICONS.facebook}</a>
+      <a href="https://wa.me/${CONTACT.whatsapp}" target="_blank" rel="noopener" aria-label="واتساب">${ICONS.whatsapp}</a>
+    </div>`;
   document.body.appendChild(mobNav);
 }
 
