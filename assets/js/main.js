@@ -399,9 +399,8 @@ function footerTemplate() {
         <span class="brand__text">Bnan Brand<span>منتجات نسائية أنيقة</span></span></div>
         <p>متجر Bnan Brand — إكسسوارات وهدايا وصناديق أنيقة بتصميم أنثوي راقٍ، نختار كل قطعة بعناية لتناسب ذوقك وتمنحك تجربة تسوّق سلسة وآمنة.</p>
         <div class="socials">
-          <a href="#" aria-label="انستغرام">${ICONS.instagram}</a>
-          <a href="#" aria-label="تويتر">${ICONS.twitter}</a>
-          <a href="#" aria-label="لينكدإن">${ICONS.linkedin}</a>
+          <a href="https://www.instagram.com/bananqodemat?srtk=MTlwY21uc2dzdTBzag==" target="_blank" rel="noopener" aria-label="انستغرام">${ICONS.instagram}</a>
+          <a href="https://www.facebook.com" target="_blank" rel="noopener" aria-label="فيسبوك">${ICONS.facebook}</a>
           <a href="https://wa.me/${CONTACT.whatsapp}" target="_blank" rel="noopener" aria-label="واتساب">${ICONS.whatsapp}</a>
         </div>
       </div>
