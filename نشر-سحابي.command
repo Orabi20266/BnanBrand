@@ -50,7 +50,27 @@ sed -i '' "s|REPLACE_WITH_DATABASE_ID|$DB_ID|" "$WORKER_DIR/wrangler.toml"
 echo ""
 echo "④ إنشاء الجداول وبيانات المتجر..."
 (cd "$WORKER_DIR" && npx wrangler d1 migrations apply bnanbrand --remote)
-(cd "$WORKER_DIR" && npx wrangler d1 execute bnanbrand --remote --file=./seed.sql)
+
+# البذر مرة واحدة فقط — حتى لا تُمسح المنتجات/التصنيفات المضافة ولا تتغيّر كلمة مرور الأدمن
+if [ "${BNAN_FORCE_SEED:-0}" = "1" ]; then
+  echo "   ⚠️ BNAN_FORCE_SEED=1 — إعادة بذر القاعدة (ستستبدل البيانات الحالية)..."
+  (cd "$WORKER_DIR" && npx wrangler d1 execute bnanbrand --remote --file=./seed.sql)
+else
+  ROWS=$(cd "$WORKER_DIR" && npx wrangler d1 execute bnanbrand --remote --json \
+    --command "SELECT (SELECT COUNT(*) FROM users)+(SELECT COUNT(*) FROM products)+(SELECT COUNT(*) FROM categories) AS n;" 2>/dev/null \
+    | python3 -c "import json,sys
+try:
+    print(json.load(sys.stdin)[0]['results'][0]['n'])
+except Exception:
+    print('')" 2>/dev/null) || ROWS=""
+  if [ -n "$ROWS" ] && [ "$ROWS" -gt 0 ] 2>/dev/null; then
+    echo "   ℹ القاعدة تحتوي بيانات بالفعل — تخطّي البذر (لن تُمسح بياناتك ولن تتغيّر كلمة المرور)."
+    echo "     لإعادة البذر إجبارياً: افتحي الطرفية ونفّذي: BNAN_FORCE_SEED=1 ثم أعيدي تشغيل السكربت."
+  else
+    echo "   🌱 أول تشغيل — إدخال البيانات الأولية..."
+    (cd "$WORKER_DIR" && npx wrangler d1 execute bnanbrand --remote --file=./seed.sql)
+  fi
+fi
 
 echo ""
 echo "⑤ ضبط مفتاح التشفير (JWT)..."
