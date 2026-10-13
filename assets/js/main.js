@@ -81,10 +81,7 @@ const Auth = {
 
 /* ---------- عناصر مشتركة (الهيدر والفوتر) ---------- */
 const navLinks = [
-  { label: 'الرئيسية', href: 'index.html', page: 'home' },
   { label: 'المنتجات', href: 'products.html', page: 'products' },
-  { label: 'عن الشركة', href: 'about.html', page: 'about' },
-  { label: 'الأسئلة الشائعة', href: 'index.html#faq', page: 'faq' },
   { label: 'تواصل معنا', href: 'contact.html', page: 'contact' }
 ];
 
@@ -412,11 +409,8 @@ function footerTemplate() {
       <div>
         <h3>روابط سريعة</h3>
         <ul>
-          <li><a href="index.html">الرئيسية</a></li>
           <li><a href="products.html">جميع المنتجات</a></li>
-          <li><a href="about.html">عن الشركة</a></li>
           <li><a href="contact.html">تواصل معنا</a></li>
-          <li><a href="index.html#faq">الأسئلة الشائعة</a></li>
         </ul>
       </div>
       <div>
@@ -940,14 +934,6 @@ function initHome() {
     initReveal();
   }
 
-  const faqWrap = document.getElementById('faqWrap');
-  if (faqWrap) {
-    faqWrap.innerHTML = FAQS.map((f, i) => `
-      <details class="faq__item"${i === 0 ? ' open' : ''}>
-        <summary class="faq__q">${f.q}</summary>
-        <div class="faq__a"><p>${f.a}</p></div>
-      </details>`).join('');
-  }
 }
 
 /* ---------- صفحة المنتجات ---------- */

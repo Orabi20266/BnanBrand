@@ -76,7 +76,7 @@ app.use('/api/admin/uploads', authenticate, uploadsRouter);
 ----------------------------------------------------- */
 const rootDir = path.join(here, '..');
 const distDir = path.join(rootDir, 'client', 'dist');
-const storePages = ['index.html', 'products.html', 'about.html', 'contact.html'];
+const storePages = ['index.html', 'products.html', 'contact.html'];
 
 // لوحة التحكم (SPA) على /admin
 if (fs.existsSync(distDir)) {
