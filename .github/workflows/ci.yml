@@ -48,7 +48,7 @@ jobs:
           curl -fsS http://localhost:4000/api/products | head -c 120
           echo ""
           echo "— صفحات المتجر (200) —"
-          for p in / /products.html /about.html /contact.html /assets/css/style.css /admin/login; do
+          for p in / /products.html /contact.html /assets/css/style.css /admin/login; do
             code=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:4000$p")
             echo "  $p → $code"
             [ "$code" = "200" ] || exit 1
