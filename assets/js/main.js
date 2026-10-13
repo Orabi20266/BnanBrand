@@ -900,16 +900,28 @@ function showOrderSuccess(order) {
 /* ---------- الصفحة الرئيسية ---------- */
 function initHome() {
   const catsWrap = document.getElementById('homeCats');
+  const featWrap = document.getElementById('featuredGrid');
+
+  /* عرض كل المنتجات مباشرة على الواجهة الرئيسية + تصفية فورية حسب التصنيف */
+  function renderHomeProducts(list) {
+    if (!featWrap) return;
+    featWrap.innerHTML = list.map((p, i) => productCard(p, i)).join('');
+    initReveal();
+  }
+  renderHomeProducts(PRODUCTS);
+
   if (catsWrap) {
     catsWrap.innerHTML = CATEGORIES.map(c =>
-      `<a class="cat-chip" href="products.html?cat=${c.id}">${ICONS[c.icon] || ICONS.box} ${c.name}</a>`).join('');
-  }
-
-  const featWrap = document.getElementById('featuredGrid');
-  if (featWrap) {
-    const featuredList = PRODUCTS.filter(p => p.badge === 'مميز');
-    const featured = (featuredList.length ? featuredList : PRODUCTS).slice(0, 4);
-    featWrap.innerHTML = featured.map((p, i) => productCard(p, i)).join('');
+      `<a class="cat-chip${c.id === 'all' ? ' is-active' : ''}" data-cat="${c.id}" href="#">${ICONS[c.icon] || ICONS.box} ${c.name}</a>`).join('');
+    catsWrap.addEventListener('click', e => {
+      const chip = e.target.closest('.cat-chip');
+      if (!chip) return;
+      e.preventDefault();
+      catsWrap.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('is-active'));
+      chip.classList.add('is-active');
+      renderHomeProducts(chip.dataset.cat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === chip.dataset.cat));
+      featWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   }
 
   const tWrap = document.getElementById('testimonialsGrid');

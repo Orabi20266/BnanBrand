@@ -62,6 +62,33 @@
   <div class="container" id="trustbar"></div>
 </div>
 
+<!-- ============ التصنيفات ============ -->
+<section class="section section--soft" id="categories" style="padding-bottom:0">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">تسوّقي حسب التصنيف</span>
+      <h2>مجموعات لعشّاق التفاصيل</h2>
+      <p>إكسسوارات، مجوهرات، عطور، صناديق هدايا وعناية — اختاري التصنيف لعرض المنتجات فوراً.</p>
+    </div>
+    <div class="cats reveal" id="homeCats" style="justify-content:center"></div>
+  </div>
+</section>
+
+<!-- ============ كل المنتجات مباشرة ============ -->
+<section class="section" id="featured">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">تشكيلتنا الكاملة</span>
+      <h2>تسوّقي من تشكيلتنا</h2>
+      <p>كل المنتجات أمامك مباشرة — اختاري من التصنيف أعلاه أو تصفّحي الكل وأضيفي ما يعجبك إلى السلة.</p>
+    </div>
+    <div class="products-grid" id="featuredGrid"></div>
+    <div class="text-center" style="margin-top:2.5rem">
+      <a href="products.html" class="btn btn--primary btn--lg">عرض صفحة المنتجات الكاملة</a>
+    </div>
+  </div>
+</section>
+
 <!-- ============ الميزات الرئيسية ============ -->
 <section class="section" id="features">
   <div class="container">
@@ -71,33 +98,6 @@
       <p>صمّمنا كل شيء ليمنحك تجربة أنيقة: عرض منتجات متقن، بحث وتصفية ذكية، وطلب آمن — لأن رضاك أولويتنا.</p>
     </div>
     <div class="features-grid" id="featuresGrid"></div>
-  </div>
-</section>
-
-<!-- ============ التصنيفات ============ -->
-<section class="section section--soft" id="categories">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">تسوّقي حسب التصنيف</span>
-      <h2>مجموعات لعشّاق التفاصيل</h2>
-      <p>إكسسوارات، مجوهرات، عطور، صناديق هدايا وعناية — اختر التصنيف الذي يناسب ذوقك.</p>
-    </div>
-    <div class="cats reveal" id="homeCats" style="justify-content:center"></div>
-  </div>
-</section>
-
-<!-- ============ منتجات مميزة ============ -->
-<section class="section" id="featured">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">الأكثر طلباً</span>
-      <h2>منتجات مميزة</h2>
-      <p>اختيارات عملائنا الأكثر مبيعاً — جودة مثبتة وتقييمات عالية.</p>
-    </div>
-    <div class="products-grid" id="featuredGrid"></div>
-    <div class="text-center" style="margin-top:2.5rem">
-      <a href="products.html" class="btn btn--primary btn--lg">عرض كل المنتجات</a>
-    </div>
   </div>
 </section>
 
@@ -178,7 +178,7 @@
   <script src="assets/js/data.js?v=5"></script>
 <script src="assets/js/icons.js?v=5"></script>
 <script src="assets/js/api.js?v=5"></script>
-<script src="assets/js/main.js?v=6"></script>
+<script src="assets/js/main.js?v=7"></script>
 <script>
 /* محتوى الأقسام الثابتة في الصفحة الرئيسية */
 document.addEventListener('DOMContentLoaded', () => {
