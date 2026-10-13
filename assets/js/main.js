@@ -11,13 +11,8 @@ const Auth = {
       this.save(res.user);
       return res.user;
     }
-    // وضع محلي تجريبي (بدون خادم: Pages / ملف مباشر)
+    // وضع محلي تجريبي (بدون خادم: Pages / ملف مباشر) — عرض فقط بلا صلاحية أدمن
     const u = { email: username, name: username.split('@')[0] };
-    const secret = String(username).toLowerCase();
-    if (password === 'Bnan1234' && (secret === 'bnan1' || secret === 'bnan1@bnan.test')) {
-      localStorage.setItem(this.adminKey, '1');
-      u.role = 'admin';
-    }
     this.save(u);
     return u;
   },
@@ -29,11 +24,6 @@ const Auth = {
       return res.user;
     }
     const u = { email: username, name: name || username.split('@')[0] };
-    const secret = String(username).toLowerCase();
-    if (password === 'Bnan1234' && (secret === 'bnan1' || secret === 'bnan1@bnan.test')) {
-      localStorage.setItem(this.adminKey, '1');
-      u.role = 'admin';
-    }
     this.save(u);
     return u;
   },

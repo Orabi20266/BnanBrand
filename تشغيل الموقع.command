@@ -38,7 +38,7 @@ done
 echo ""
 echo "✅ الموقع يعمل الآن:"
 echo "   المتجر      : $URL"
-echo "   لوحة التحكم : $URL/admin   (اسم المستخدم: Bnan1 / كلمة المرور: Bnan1234)"
+echo "   لوحة التحكم : $URL/admin"
 echo ""
 echo "⛔ لإيقاف الخادم: اضغطي Ctrl + C أو أغلقي هذه النافذة."
 echo ""

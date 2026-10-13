@@ -51,7 +51,6 @@ export default function AdminLogin() {
               className="input"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Bnan1"
               autoComplete="username"
             />
           </div>
@@ -70,9 +69,6 @@ export default function AdminLogin() {
             {loading ? 'جارٍ الدخول...' : 'تسجيل الدخول'}
             {!loading && <Icon.Shield className="h-4 w-4" />}
           </button>
-          <p className="rounded-2xl bg-blush-50 p-3 text-center text-xs text-muted">
-            الافتراضي: <strong>Bnan1</strong> / <strong>Bnan1234</strong> — غيّريها فوراً من الإعدادات.
-          </p>
         </form>
 
         <p className="mt-5 text-center text-sm">

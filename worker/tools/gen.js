@@ -100,8 +100,8 @@ async function hashPassword(password) {
 }
 
 async function main() {
-  const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'Bnan1';
-  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Bnan1234';
+  const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'change-me-admin';
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'change-me-strong-password';
   const adminHash = await hashPassword(ADMIN_PASSWORD);
 
   const lines = [];

@@ -17,6 +17,6 @@ for _ in $(seq 1 20); do
   sleep 0.5
 done
 echo "Store    : $URL"
-echo "Admin    : $URL/admin  (Bnan1 / Bnan1234)"
+echo "Admin    : $URL/admin"
 open "$URL" 2>/dev/null || true
 wait $SERVER_PID

@@ -17,10 +17,10 @@ name = "bnanbrand-api"
 main = "src/index.js"
 compatibility_date = "2025-05-01"
 
-# بيانات الأدمن الافتراضية (يمكن تغييرها لاحقاً من تبويب Settings في Cloudflare)
-[vars]
-ADMIN_USERNAME = "Bnan1"
-ADMIN_PASSWORD = "Bnan1234"
+# ملاحظة: لا تُكتب بيانات الأدمن هنا (الملف عام). استخدمي:
+#   npx wrangler secret put JWT_SECRET
+# أو اضبطي الأسرار من: Cloudflare Dashboard → Worker → Settings → Variables.
+# حساب الأدمن نفسه محفوظ في قاعدة البيانات D1 (تُولَّد كلمة مروره من tools/gen.js).
 
 [[d1_databases]]
 binding = "DB"
