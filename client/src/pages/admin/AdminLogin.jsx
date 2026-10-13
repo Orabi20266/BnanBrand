@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { Icon } from '../../components/Icons.jsx';
+import { STORE_URL } from '../../lib/storeUrl.js';
 
 export default function AdminLogin() {
   const { login, user } = useAuth();
@@ -72,7 +73,7 @@ export default function AdminLogin() {
         </form>
 
         <p className="mt-5 text-center text-sm">
-          <Link to="/" className="text-brand hover:underline">← العودة إلى المتجر</Link>
+          <a href={STORE_URL} className="text-brand hover:underline">← العودة إلى المتجر</a>
         </p>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { Icon } from '../../components/Icons.jsx';
+import { STORE_URL } from '../../lib/storeUrl.js';
 
 const navItems = [
   { to: '/', label: 'لوحة المعلومات', icon: Icon.Chart, end: true },
@@ -60,9 +61,9 @@ export default function AdminLayout() {
         <button onClick={handleLogout} className="btn-outline w-full py-2.5 text-xs">
           <Icon.Logout className="h-4 w-4" /> تسجيل الخروج
         </button>
-        <Link to="/" className="block text-center text-xs text-muted hover:text-brand">
-          عرض المتجر ←
-        </Link>
+        <a href={STORE_URL} className="block text-center text-xs text-muted hover:text-brand">
+          العودة إلى المتجر ←
+        </a>
       </div>
     </div>
   );

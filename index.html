@@ -17,205 +17,58 @@
 <header class="site-header" id="site-header"></header>
 
 <main>
-<!-- ============ الواجهة الرئيسية ============ -->
-<section class="hero">
-  <div class="container hero__grid">
-    <div>
-      <span class="eyebrow">أناقة تليق بك</span>
-      <h1 class="hero__title">
-        مرحباً بك في عالم <span class="accent">الأناقة والتفاصيل</span> الراقية
-      </h1>
-      <p class="hero__lead">
-        اكتشفي تشكيلة <b>BnanBrand</b> من الإكسسوارات والمجوهرات وصناديق الهدايا والعطور
-        ومنتجات العناية — قطع مختارة بعناية بلمسة أنثوية راقية وأسعار تنافسية.
-        تسوّق آمن وسهل مع توصيل سريع وخدمة عملاء استثنائية.
-      </p>
-      <div class="hero__cta">
-        <a href="products.html" class="btn btn--primary btn--lg">تصفح المنتجات</a>
-        <a href="contact.html" class="btn btn--ghost btn--lg">تواصلي معنا</a>
-      </div>
-      <div class="hero__stats">
-        <div class="stat"><strong data-count-to="4200" data-suffix="+">0</strong><span>عميلة سعيدة</span></div>
-        <div class="stat"><strong data-count-to="120" data-suffix="+">0</strong><span>منتج متنوّع</span></div>
-        <div class="stat"><strong data-count-to="99" data-suffix="%">0</strong><span>نسبة الرضا</span></div>
-        <div class="stat"><strong data-count-to="10" data-suffix=" سنوات">0</strong><span>من الأناقة</span></div>
-      </div>
-    </div>
-
-    <div class="hero__visual">
-      <div class="hero__card">
-        <div class="hero__img" id="heroArt"></div>
-        <div class="hero__badges">
-          <div class="hero__badge"><b>تغليف</b><span>هدايا أنيق</span></div>
-          <div class="hero__badge"><b>جودة</b><span>مضمونة 100%</span></div>
-          <div class="hero__badge"><b>توصيل</b><span>سريع وآمن</span></div>
-        </div>
-      </div>
-      <div class="hero__float hero__float--a" id="floatA"></div>
-      <div class="hero__float hero__float--b" id="floatB"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ شريط الثقة ============ -->
-<div class="trustbar">
-  <div class="container" id="trustbar"></div>
-</div>
-
-<!-- ============ التصنيفات ============ -->
-<section class="section section--soft" id="categories" style="padding-bottom:0">
+<!-- ============ الصفحة الرئيسية = صفحة المنتجات ============ -->
+<section class="page-hero">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">تسوّقي حسب التصنيف</span>
-      <h2>مجموعات لعشّاق التفاصيل</h2>
-      <p>إكسسوارات، مجوهرات، عطور، صناديق هدايا وعناية — اختاري التصنيف لعرض المنتجات فوراً.</p>
-    </div>
-    <div class="cats reveal" id="homeCats" style="justify-content:center"></div>
+    <h1 style="margin-bottom:.4rem">منتجاتنا</h1>
+    <p style="max-width:680px;margin:0 auto">تشكيلة <b>BnanBrand</b> من الإكسسوارات والمجوهرات وصناديق الهدايا والعطور ومنتجات العناية — تصفية فورية حسب التصنيف، وترتيب ذكي، وبحث سريع.</p>
   </div>
 </section>
 
-<!-- ============ كل المنتجات مباشرة ============ -->
-<section class="section" id="featured">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">تشكيلتنا الكاملة</span>
-      <h2>تسوّقي من تشكيلتنا</h2>
-      <p>كل المنتجات أمامك مباشرة — اختاري من التصنيف أعلاه أو تصفّحي الكل وأضيفي ما يعجبك إلى السلة.</p>
-    </div>
-    <div class="products-grid" id="featuredGrid"></div>
-    <div class="text-center" style="margin-top:2.5rem">
-      <a href="products.html" class="btn btn--primary btn--lg">عرض صفحة المنتجات الكاملة</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============ الميزات الرئيسية ============ -->
-<section class="section" id="features">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">لماذا BnanBrand؟</span>
-      <h2>تفاصيل تجعل تجربة التسوق أجمل</h2>
-      <p>صمّمنا كل شيء ليمنحك تجربة أنيقة: عرض منتجات متقن، بحث وتصفية ذكية، وطلب آمن — لأن رضاك أولويتنا.</p>
-    </div>
-    <div class="features-grid" id="featuresGrid"></div>
-  </div>
-</section>
-
-<!-- ============ مزايا الخدمة ============ -->
-<section class="section section--kraft">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">خدمة ممتازة</span>
-      <h2>نلتزم في كل خطوة</h2>
-      <p>من لحظة الطلب حتى وصوله إلى بابك — نضمن لك تجربة سلسة وأنثوية راقية.</p>
-    </div>
-    <div class="usp-grid" id="uspGrid"></div>
-  </div>
-</section>
-
-<!-- ============ خطوات العمل ============ -->
 <section class="section">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">كيف نعمل</span>
-      <h2>أربع خطوات فقط حتى طلبك</h2>
-      <p>تجربة تسوّق بسيطة وواضحة من الاختيار حتى الاستلام.</p>
-    </div>
-    <div class="steps" id="stepsGrid"></div>
-  </div>
-</section>
 
-<!-- ============ آراء العملاء ============ -->
-<section class="section section--soft">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">آراء العملاء</span>
-      <h2>ماذا تقول عميلاتنا؟</h2>
-      <p>ثقة أكثر من 4200 عميلة تتسوّق معنا بكل حب.</p>
-    </div>
-    <div class="testimonials-grid" id="testimonialsGrid"></div>
-  </div>
-</section>
+    <!-- أدوات التصفية -->
+    <div class="cats" id="filterChips"></div>
 
-<!-- ============ دعوة للتواصل ============ -->
-<section class="section" style="padding-top:0">
-  <div class="container">
-    <div class="cta-band reveal">
-      <div>
-        <h2>جاهزة لتجربة أنيقة؟</h2>
-        <p>تصفّحي تشكيلتنا واطلبي ما يحلو لك — التوصيل سريع والدفع آمن، ونحن هنا لمساعدتك في أي وقت.</p>
-        <div class="cta-band__actions">
-          <a href="products.html" class="btn btn--light btn--lg">ابدئي التسوّق</a>
-          <a href="https://wa.me/966551234567" target="_blank" rel="noopener" class="btn btn--ghost btn--lg" style="color:#fff;border-color:rgba(255,255,255,.35)">تواصلي واتساب</a>
-        </div>
+    <div class="toolbar">
+      <label class="search">
+        <span class="sr-only">ابحث في المنتجات</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" id="searchInput" placeholder="ابحث باسم المنتج أو رقمه…">
+      </label>
+      <div class="select-wrap">
+        <label class="sr-only" for="sortSelect">ترتيب حسب</label>
+        <select id="sortSelect">
+          <option value="featured">الأكثر رواجاً</option>
+          <option value="price-asc">السعر: من الأقل</option>
+          <option value="price-desc">السعر: من الأعلى</option>
+          <option value="rating">الأعلى تقييماً</option>
+          <option value="name">الاسم أبجدياً</option>
+        </select>
       </div>
-      <div style="display:grid;gap:.7rem">
-        <div class="hero__float" style="position:static;box-shadow:none">🚚 توصيل خلال 24-48 ساعة</div>
-        <div class="hero__float" style="position:static;box-shadow:none">🛡️ ضمان واستبدال خلال 7 أيام</div>
-        <div class="hero__float" style="position:static;box-shadow:none">🎁 تغليف هدايا مجاني</div>
-      </div>
+      <span class="result-count" id="resultCount"></span>
+    </div>
+
+    <!-- شبكة المنتجات -->
+    <div class="products-grid" id="productsGrid"></div>
+
+    <div class="empty-state" id="emptyState" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M3 8.5 12 4l9 4.5v7L12 20l-9-4.5z"/><path d="M3 8.5 12 13l9-4.5M12 13v7"/><path d="M8.5 2.5 8 6M15.5 2.5 15 6"/></svg>
+      <h3>لا توجد نتائج مطابقة</h3>
+      <p>جرّبي تعديل كلمة البحث أو اختيار تصنيف آخر.</p>
+      <a href="index.html" class="btn btn--primary">عرض كل المنتجات</a>
     </div>
   </div>
 </section>
-
 </main>
 
 <footer class="site-footer" id="site-footer"></footer>
 
 <script src="assets/js/config.js?v=5"></script>
-  <script src="assets/js/data.js?v=6"></script>
+<script src="assets/js/data.js?v=6"></script>
 <script src="assets/js/icons.js?v=5"></script>
 <script src="assets/js/api.js?v=5"></script>
-<script src="assets/js/main.js?v=8"></script>
-<script>
-/* محتوى الأقسام الثابتة في الصفحة الرئيسية */
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('heroArt').innerHTML = BOX_ART('#FFB6D9', '#FFC3DD', '#E75480');
-  document.getElementById('floatA').innerHTML = ICONS.shield + '<span>ضمان جودة 100%</span>';
-  document.getElementById('floatB').innerHTML = ICONS.truck + '<span>توصيل سريع</span>';
-
-  document.getElementById('trustbar').innerHTML = `
-    <span>${ICONS.shield} ضمان استبدال 7 أيام</span>
-    <span>${ICONS.gift} تغليف هدايا مجاني</span>
-    <span>${ICONS.tag} أفضل الأسعار التنافسية</span>
-    <span>${ICONS.headset} خدمة عملاء على مدار الساعة</span>`;
-
-  document.getElementById('featuresGrid').innerHTML = [
-    ['layers', 'عرض منتجات متقن', 'صور عالية الجودة وأوصاف تفصيلية لكل منتج مع المواصفات والأبعاد لتختار بثقة.'],
-    ['box', 'تصميم متجاوب', 'تجربة تعمل بكفاءة على الهاتف والحاسوب، بواجهة عربية واضحة وسريعة.'],
-    ['search', 'بحث وتصفية ذكية', 'تصنيفات واضحة وفلاتر حسب المقاس والسعر والتقييم للوصول لما تريد فوراً.'],
-    ['wallet', 'نظام دفع آمن', 'خيارات دفع متعددة وموثوقة، وبياناتك محمية ولا تُخزَّن على خوادمنا.'],
-    ['headset', 'تواصل مباشر', 'معلومات الاتصال وقنوات تواصل فعالة: واتساب، هاتف، وبريد إلكتروني.'],
-    ['info', 'معلومات شاملة', 'تفاصيل المنتجات والأسعار وسياسات التوصيل والضمان في مكان واحد.']
-  ].map(([ic, t, d], i) => `
-    <article class="feature reveal">
-      <div class="feature__icon">${ICONS[ic]}</div>
-      <h3>${t}</h3>
-      <p>${d}</p>
-    </article>`).join('');
-
-  document.getElementById('uspGrid').innerHTML = [
-    ['truck', 'توصيل سريع', 'خلال 24-48 ساعة داخل الرياض، و2-5 أيام لبقية المناطق.'],
-    ['wallet', 'أسعار تنافسية', 'أسعار جملة تبدأ من 500 قطعة مع خصومات متدرجة.'],
-    ['printer', 'طباعة مخصصة', 'شعارك وبياناتك على الصندوق بألوان مطابقة للطباعة.'],
-    ['headset', 'دعم استثنائي', 'فريق متخصص جاهز للإجابة على استفساراتك قبل وبعد الطلب.']
-  ].map(([ic, t, d]) => `
-    <article class="usp reveal">
-      <div class="usp__icon">${ICONS[ic]}</div>
-      <h3>${t}</h3><p>${d}</p>
-    </article>`).join('');
-
-  document.getElementById('stepsGrid').innerHTML = [
-    ['اختر منتجك', 'تصفح المجموعات والمقاسات، وأضف ما تحتاجه إلى السلة.'],
-    ['أرسل تفاصيلك', 'حدّد الكمية والمقاس المطلوب عبر النموذج أو واتساب.'],
-    ['احصل على عرض سعر', 'يصلك عرض سعر مفصّل ومخصص خلال 24 ساعة عمل.'],
-    ['استلم وتأكد', 'نوصل طلبك في الموعد، مع حقك في الاستبدال خلال 7 أيام.']
-  ].map(([t, d], i) => `
-    <div class="step reveal">
-      <span class="step__num">${i + 1}</span>
-      <h3>${t}</h3><p>${d}</p>
-    </div>`).join('');
-});
-</script>
+<script src="assets/js/main.js?v=9"></script>
 </body>
 </html>

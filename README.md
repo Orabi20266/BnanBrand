@@ -22,9 +22,8 @@
 
 ```
 BnanBrand_Final/
-├── index.html            واجهة المتجر الرئيسية
-├── products.html         صفحة المنتجات (بحث + تصفية + فرز)
-├── about.html            عن المتجر
+├── index.html            الصفحة الرئيسية = صفحة المنتجات (بحث + تصفية + فرز)
+├── products.html         تحويل تلقائي إلى index.html (لدعم الروابط المحفوظة)
 ├── contact.html          تواصل معنا
 ├── assets/               ثيم المتجر (CSS + JS)
 │   ├── css/style.css     التنسيقات (الوردي، RTL، متجاوب)

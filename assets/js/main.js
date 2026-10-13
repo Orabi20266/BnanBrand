@@ -71,7 +71,7 @@ const Auth = {
 
 /* ---------- عناصر مشتركة (الهيدر والفوتر) ---------- */
 const navLinks = [
-  { label: 'المنتجات', href: 'products.html', page: 'products' },
+  { label: 'المنتجات', href: 'index.html', page: 'index' },
   { label: 'تواصل معنا', href: 'contact.html', page: 'contact' }
 ];
 
@@ -141,7 +141,7 @@ const Cart = {
       body.innerHTML = `<div class="cart-empty">${ICONS.boxEmpty}
         <p><b>سلتك فارغة</b></p>
         <p style="font-size:.9rem">أضف بعض المنتجات لتبدأ طلبك.</p>
-        <a href="products.html" class="btn btn--ghost btn--sm" data-close-cart>تصفح المنتجات</a></div>`;
+        <a href="index.html" class="btn btn--ghost btn--sm" data-close-cart>تصفح المنتجات</a></div>`;
       foot.innerHTML = '';
       return;
     }
@@ -375,7 +375,7 @@ function headerTemplate() {
       <button class="icon-btn" id="cartToggle" aria-label="سلة المشتريات">${ICONS.cart}<span class="icon-btn__badge" data-count="0"></span></button>
       <button class="btn btn--ghost btn--sm" id="authBtn" aria-label="تسجيل الدخول">تسجيل الدخول</button>
       <a class="btn btn--primary btn--sm" id="adminBtn" href="admin/" style="display:none">لوحة التحكم</a>
-      <a class="btn btn--primary btn--sm" href="products.html">تسوّق الآن</a>
+      <a class="btn btn--primary btn--sm" href="index.html">تسوّق الآن</a>
       <button class="icon-btn burger" id="burger" aria-label="القائمة">${ICONS.menu}</button>
     </div>
   </div>`;
@@ -399,14 +399,14 @@ function footerTemplate() {
       <div>
         <h3>روابط سريعة</h3>
         <ul>
-          <li><a href="products.html">جميع المنتجات</a></li>
+          <li><a href="index.html">جميع المنتجات</a></li>
           <li><a href="contact.html">تواصل معنا</a></li>
         </ul>
       </div>
       <div>
         <h3>التصنيفات</h3>
         <ul>
-          ${CATEGORIES.filter(c => c.id !== 'all').slice(0, 6).map(c => `<li><a href="products.html?cat=${c.id}">${c.name}</a></li>`).join('')}
+          ${CATEGORIES.filter(c => c.id !== 'all').slice(0, 6).map(c => `<li><a href="index.html?cat=${c.id}">${c.name}</a></li>`).join('')}
         </ul>
       </div>
       <div>
